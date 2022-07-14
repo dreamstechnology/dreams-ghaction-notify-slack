@@ -5,13 +5,26 @@ inputs:
     description: 'Slack channel ID where message will be posted. Needed if using bot token'
     default: C03PDNM1GDT # dreamstech-github-notifications channel
     required: false
+  outcome:
+    description: "Tells the action if it's a success outcome"
+    required: false
+    default: 'failure'
 runs:
   using: composite
   steps:
-    - name: Send slack notification
+    - name: Send success slack notification
+      if: ${{ inputs.outcome == 'success' }}
       shell: bash
       run: |
         curl -H "Content-type: application/json" \
         --data "{ "channel": ${{ inputs.channel_id }}, "blocks": [{ "type": "section", "text": { "type": "mrkdwn", "text": "*status:* ${{ github.status }}" } }, { "type": "section", "text": { "type": "mrkdwn", "text": "*repository:* ${{ github.repository }}" }}, { "type": "divider" }, { "type": "section", "text": { "type": "mrkdwn", "text": "Was merged by ${{ github.event.pull_request.user.login }}" } }, { "type": "section", "text": { "type": "mrkdwn", "text": "Check it by clicking the button" }, "accessory": { "type": "button", "text": { "type": "plain_text", "text": "PR Url", "emoji": true }, "value": "click_me_123", "url": "${{ github.event.pull_request.html_url }}", "action_id": "button-action" }}]}" \
+        -H "Authorization: Bearer xoxb-${$SLACK_APP_API_TOKEN}" \
+        -X POST https://slack.com/api/chat.postMessage
+    - name: Send failure slack notification
+      if: ${{ inputs.outcome == 'failure' }}
+      shell: bash
+      run: |
+        curl -H "Content-type: application/json" \
+        --data "{ "channel": ${{ inputs.channel_id }}, "blocks": [{ "type": "section", "text": { "type": "mrkdwn", "text": "*status:* ${{ github.status }}" } }, { "type": "section", "text": { "type": "mrkdwn", "text": "*repository:* ${{ github.repository }}" }}, { "type": "divider" }, { "type": "section", "text": { "type": "mrkdwn", "text": "Action failed" } }, { "type": "section", "text": { "type": "mrkdwn", "text": "Check it by clicking the button" }, "accessory": { "type": "button", "text": { "type": "plain_text", "text": "PR Url", "emoji": true }, "value": "click_me_123", "url": "${{ github.event.pull_request.html_url }}", "action_id": "button-action" }}]}" \
         -H "Authorization: Bearer xoxb-${$SLACK_APP_API_TOKEN}" \
         -X POST https://slack.com/api/chat.postMessage
