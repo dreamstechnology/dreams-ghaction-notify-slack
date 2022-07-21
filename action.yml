@@ -14,62 +14,20 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Test slack endpoint
+      shell: bash
+      run: |
+        curl -H "Authorization: Bearer xoxb-${{ inputs.token }}" https://slack.com/api/auth.test
     - name: Send success slack notification
       if: ${{ inputs.outcome == 'success' }}
       shell: bash
       run: |
+        cat ./success/json
+        echo "-----------"
         curl -H "Content-type: application/json" \
+            -d ./success.json
              -H "Authorization: Bearer xoxb-${{ inputs.token }}" \
              -X POST https://slack.com/api/chat.postMessage \
-            --data \
-        "
-        {
-          \"channel\": ${{ inputs.channel_id }},
-          \"blocks\": [
-            {
-              \"type\": \"section\",
-              \"text\": {
-                \"type\": \"mrkdwn\",
-                \"text\": \"*status:* success \"
-              }
-            },
-            {
-              \"type\": \"section\",
-              \"text\": {
-                \"type\": \"mrkdwn\",
-                \"text\": \"*repository:* ${{ github.repository }} \"
-              }
-            },
-            {
-              \"type\": \"divider\"
-            },
-            {
-              \"type\": \"section\",
-              \"text\": {
-                \"type\": \"mrkdwn\",
-                \"text\": \"Action success\"
-              }
-            },
-            {
-              \"type\": \"section\",
-              \"text\": {
-                \"type\": \"mrkdwn\",
-                \"text\": \"Check it by clicking the button\"
-              },
-              \"accessory\": {
-                \"type\": \"button\",
-                \"text\": {
-                  \"type\": \"plain_text\",
-                  \"text\": \"PR Url\",
-                  \"emoji\": true
-                },
-                \"value\": \"click_me_123\",
-                \"url\": ${{ github.event.pull_request.html_url }},
-                \"action_id\": \"button-action\"
-              }
-            }
-          ]
-        }"
     - name: Send failure slack notification
       if: ${{ inputs.outcome == 'failure' }}
       shell: bash
