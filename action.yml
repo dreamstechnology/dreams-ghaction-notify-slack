@@ -24,7 +24,7 @@ runs:
       run: |
         cat ./success/json
         echo "-----------"
-        curl -H "Content-type: application/json" \
+        curl -H "Content-Type: application/json" \
             -d ./success.json
              -H "Authorization: Bearer xoxb-${{ inputs.token }}" \
              -X POST https://slack.com/api/chat.postMessage \
@@ -32,7 +32,7 @@ runs:
       if: ${{ inputs.outcome == 'failure' }}
       shell: bash
       run: |
-        curl -H "Content-type: application/json" \
+        curl -H "Content-Type: application/json" \
              -H "Authorization: Bearer xoxb-${{ inputs.token }}" \
              -X POST https://slack.com/api/chat.postMessage \
             --data \
