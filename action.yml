@@ -22,7 +22,7 @@ runs:
       if: ${{ inputs.outcome == 'success' }}
       shell: bash
       run: |
-        cat ./success/json
+        cat ./success.json
         echo "-----------"
         curl -H "Content-Type: application/json" \
             -d ./success.json
