@@ -25,7 +25,7 @@ runs:
         ls $GITHUB_WORKSPACE
         cat "$GITHUB_WORKSPACE/notify-slack/success.json"
         echo "---------"
-        curl -X POST https://slack.com/api/chat.postMessage
+        curl -X POST https://slack.com/api/chat.postMessage \
              -H "Authorization: Bearer xoxb-${{ inputs.token }}" \
              -H 'Accept: application/json' \
              -H "Content-Type: application/json" \
