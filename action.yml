@@ -14,17 +14,10 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: actions/checkout@v3
-      with:
-        repository: dreamstechnology/dreams-ghaction-notify-slack
-        path: ./notify-slack
     - name: Send success slack notification
       if: ${{ inputs.outcome == 'success' }}
       shell: bash
       run: |
-        ls $GITHUB_WORKSPACE
-        cat "$GITHUB_WORKSPACE/notify-slack/success.json"
-        echo "---------"
         curl -X POST https://slack.com/api/chat.postMessage \
              -H "Authorization: Bearer xoxb-${{ inputs.token }}" \
              -H 'Accept: application/json' \
