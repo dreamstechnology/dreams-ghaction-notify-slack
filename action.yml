@@ -14,18 +14,16 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Checkout
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v3
       with:
         repository: dreamstechnology/dreams-ghaction-notify-slack
         path: ./notify-slack
-
     - name: Send success slack notification
       if: ${{ inputs.outcome == 'success' }}
       shell: bash
       run: |
         ls -al
-        echo "-----------"
+        ls $GITHUB_ACTION_PATH
         curl -H "Content-Type: application/json" \
             -d ./notify-slack/success.json
              -H "Authorization: Bearer xoxb-${{ inputs.token }}" \
