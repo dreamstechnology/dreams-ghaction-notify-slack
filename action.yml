@@ -22,5 +22,5 @@ runs:
              -H "Authorization: Bearer xoxb-${{ inputs.token }}" \
              -H "Accept: application/json" \
              -H "Content-Type: application/json" \
-             --data '{ "channel": "C03PDNM1GDT", "blocks": [{ "type": "section", "text": { "type": "mrkdwn", "text": "*status:* success " } }] }'
+             --data '{ "channel": "${{ inputs.channel_id }}", "blocks": [{ "type": "section", "text": { "type": "mrkdwn", "text": "*status:* success " } }] }'
 
