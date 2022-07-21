@@ -3,12 +3,14 @@ description: Notify Slack
 inputs:
   channel_id: # channel id to post message when using bot token
     description: 'Slack channel ID where message will be posted. Needed if using bot token'
-    default: C03PDNM1GDT # dreamstech-github-notifications channel
     required: false
   outcome:
     description: "Tells the action if it's a success outcome"
     required: false
     default: 'failure'
+  token:
+    description: "Slack app api token"
+    required: true
 runs:
   using: composite
   steps:
@@ -17,8 +19,8 @@ runs:
       shell: bash
       run: |
         curl -H "Content-type: application/json" \
-        --data "{ "channel": ${{ inputs.channel_id }}, "blocks": [{ "type": "section", "text": { "type": "mrkdwn", "text": "*status:* ${{ github.status }}" } }, { "type": "section", "text": { "type": "mrkdwn", "text": "*repository:* ${{ github.repository }}" }}, { "type": "divider" }, { "type": "section", "text": { "type": "mrkdwn", "text": "Was merged by ${{ github.event.pull_request.user.login }}" } }, { "type": "section", "text": { "type": "mrkdwn", "text": "Check it by clicking the button" }, "accessory": { "type": "button", "text": { "type": "plain_text", "text": "PR Url", "emoji": true }, "value": "click_me_123", "url": "${{ github.event.pull_request.html_url }}", "action_id": "button-action" }}]}" \
-        -H "Authorization: Bearer xoxb-${$SLACK_APP_API_TOKEN}" \
+        --data "{ "channel": ${{ inputs.channel_id }}, "blocks": [{ "type": "section", "text": { "type": "mrkdwn", "text": "*status:* ${{ github.status }}" } }, { "type": "section", "text": { "type": "mrkdwn", "text": "*repository:* ${{ github.repository }}" }}, { "type": "divider" }, { "type": "section", "text": { "type": "mrkdwn", "text": "Action success" } }, { "type": "section", "text": { "type": "mrkdwn", "text": "Check it by clicking the button" }, "accessory": { "type": "button", "text": { "type": "plain_text", "text": "PR Url", "emoji": true }, "value": "click_me_123", "url": "${{ github.event.pull_request.html_url }}", "action_id": "button-action" }}]}" \
+        -H "Authorization: Bearer xoxb-${{ inputs.token }}" \
         -X POST https://slack.com/api/chat.postMessage
     - name: Send failure slack notification
       if: ${{ inputs.outcome == 'failure' }}
@@ -26,5 +28,5 @@ runs:
       run: |
         curl -H "Content-type: application/json" \
         --data "{ "channel": ${{ inputs.channel_id }}, "blocks": [{ "type": "section", "text": { "type": "mrkdwn", "text": "*status:* ${{ github.status }}" } }, { "type": "section", "text": { "type": "mrkdwn", "text": "*repository:* ${{ github.repository }}" }}, { "type": "divider" }, { "type": "section", "text": { "type": "mrkdwn", "text": "Action failed" } }, { "type": "section", "text": { "type": "mrkdwn", "text": "Check it by clicking the button" }, "accessory": { "type": "button", "text": { "type": "plain_text", "text": "PR Url", "emoji": true }, "value": "click_me_123", "url": "${{ github.event.pull_request.html_url }}", "action_id": "button-action" }}]}" \
-        -H "Authorization: Bearer xoxb-${$SLACK_APP_API_TOKEN}" \
+        -H "Authorization: Bearer xoxb-${{ inputs.token }}" \
         -X POST https://slack.com/api/chat.postMessage
