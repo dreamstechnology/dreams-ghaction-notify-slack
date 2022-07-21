@@ -23,7 +23,7 @@ runs:
       shell: bash
       run: |
         ls -al
-        ls $GITHUB_ACTION_PATH
+        ls ${{ $GITHUB_WORKSPACE  }}
         curl -H "Content-Type: application/json" \
             -d ./notify-slack/success.json
              -H "Authorization: Bearer xoxb-${{ inputs.token }}" \
