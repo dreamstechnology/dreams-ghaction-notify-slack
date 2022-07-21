@@ -23,10 +23,12 @@ runs:
       shell: bash
       run: |
         ls $GITHUB_WORKSPACE
+        cat "$GITHUB_WORKSPACE/notify-slack/success.json"
+        echo "---------"
         curl -H "Content-Type: application/json" \
             -d "$GITHUB_WORKSPACE/notify-slack/success.json"
              -H "Authorization: Bearer xoxb-${{ inputs.token }}" \
-             -X POST https://slack.com/api/chat.postMessage \
+             -X POST https://slack.com/api/chat.postMessage
     - name: Send failure slack notification
       if: ${{ inputs.outcome == 'failure' }}
       shell: bash
