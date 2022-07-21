@@ -23,7 +23,7 @@ runs:
              -H "Accept: application/json" \
              -H "Content-Type: application/json" \
              --data \
-            '
+
             {
               "channel": "C03PDNM1GDT",
               "blocks": [
@@ -71,4 +71,4 @@ runs:
                 }
               ]
             }
-            '
+
