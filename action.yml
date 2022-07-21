@@ -23,7 +23,6 @@ runs:
              -H "Accept: application/json" \
              -H "Content-Type: application/json" \
              --data \
-
             {
               "channel": "C03PDNM1GDT",
               "blocks": [
@@ -65,7 +64,7 @@ runs:
                       "emoji": true
                     },
                     "value": "click_me_123",
-                    "url": "${{ github.event.pull_request.html_url }}",
+                    "url": "https://github.com/dreamstechnology/demo-test-githubaction-repo",
                     "action_id": "button-action"
                   }
                 }
