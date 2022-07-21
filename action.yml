@@ -21,7 +21,7 @@ runs:
         curl -H "Content-type: application/json" \
              -H "Authorization: Bearer xoxb-${{ inputs.token }}" \
              -X POST https://slack.com/api/chat.postMessage \
-        --data \
+            --data \
         "
         {
           \"channel\": ${{ inputs.channel_id }},
@@ -77,7 +77,7 @@ runs:
         curl -H "Content-type: application/json" \
              -H "Authorization: Bearer xoxb-${{ inputs.token }}" \
              -X POST https://slack.com/api/chat.postMessage \
-        --data \
+            --data \
         "
         {
           \"channel\": ${{ inputs.channel_id }},

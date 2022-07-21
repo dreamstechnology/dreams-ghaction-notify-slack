@@ -1,0 +1,47 @@
+{
+  "channel": "${{ inputs.channel_id }}",
+  "blocks": [
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*status:* success "
+      }
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*repository:* ${{ github.repository }}"
+      }
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "Action success"
+      }
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "Check it by clicking the button"
+      },
+      "accessory": {
+        "type": "button",
+        "text": {
+          "type": "plain_text",
+          "text": "PR Url",
+          "emoji": true
+        },
+        "value": "click_me_123",
+        "url": "${{ github.event.pull_request.html_url }}",
+        "action_id": "button-action"
+      }
+    }
+  ]
+}
