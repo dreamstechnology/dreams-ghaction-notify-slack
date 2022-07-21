@@ -16,6 +16,10 @@ runs:
   steps:
     - name: Checkout
       uses: actions/checkout@v3
+      with:
+        repository: dreamstechnology/dreams-ghaction-notify-slack
+        path: ./notify-slack
+
     - name: Send success slack notification
       if: ${{ inputs.outcome == 'success' }}
       shell: bash
@@ -23,7 +27,7 @@ runs:
         ls -al
         echo "-----------"
         curl -H "Content-Type: application/json" \
-            -d success.json
+            -d ./notify-slack/success.json
              -H "Authorization: Bearer xoxb-${{ inputs.token }}" \
              -X POST https://slack.com/api/chat.postMessage \
     - name: Send failure slack notification
