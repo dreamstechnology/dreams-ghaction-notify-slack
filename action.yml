@@ -25,10 +25,11 @@ runs:
         ls $GITHUB_WORKSPACE
         cat "$GITHUB_WORKSPACE/notify-slack/success.json"
         echo "---------"
-        curl  -X POST https://slack.com/api/chat.postMessage
-            -H "Content-Type: application/json" \
-            -d "{ \"channel\": \"${{ inputs.channel_id }}\", \"blocks\": [{ \"type\": \"section\", \"text\": { \"type\": \"mrkdwn\", \"text\": \"*status:* success \" } }, { \"type\": \"section\", \"text\": { \"type\": \"mrkdwn\", \"text\": \"*repository:* ${{ github.repository }}\" } }, { \"type\": \"divider\" }, { \"type\": \"section\", \"text\": { \"type\": \"mrkdwn\", \"text\": \"Action success\" } }, { \"type\": \"section\", \"text\": { \"type\": \"mrkdwn\", \"text\": \"Check it by clicking the button\" }, \"accessory\": { \"type\": \"button\", \"text\": { \"type\": \"plain_text\", \"text\": \"PR Url\", \"emoji\": true }, \"value\": \"click_me_123\", \"url\": \"${{ github.event.pull_request.html_url }}\", \"action_id\": \"button-action\" } } ] }"
+        curl -X POST https://slack.com/api/chat.postMessage
              -H "Authorization: Bearer xoxb-${{ inputs.token }}" \
+             -H 'Accept: application/json' \
+             -H "Content-Type: application/json" \
+             -d "{ \"channel\": \"${{ inputs.channel_id }}\", \"blocks\": [{ \"type\": \"section\", \"text\": { \"type\": \"mrkdwn\", \"text\": \"*status:* success \" } }, { \"type\": \"section\", \"text\": { \"type\": \"mrkdwn\", \"text\": \"*repository:* ${{ github.repository }}\" } }, { \"type\": \"divider\" }, { \"type\": \"section\", \"text\": { \"type\": \"mrkdwn\", \"text\": \"Action success\" } }, { \"type\": \"section\", \"text\": { \"type\": \"mrkdwn\", \"text\": \"Check it by clicking the button\" }, \"accessory\": { \"type\": \"button\", \"text\": { \"type\": \"plain_text\", \"text\": \"PR Url\", \"emoji\": true }, \"value\": \"click_me_123\", \"url\": \"${{ github.event.pull_request.html_url }}\", \"action_id\": \"button-action\" } } ] }"
 
     - name: Send failure slack notification
       if: ${{ inputs.outcome == 'failure' }}
