@@ -22,5 +22,5 @@ runs:
              -H "Authorization: Bearer xoxb-${{ inputs.token }}" \
              -H "Accept: application/json" \
              -H "Content-Type: application/json" \
-             --data '{ "channel": "${{ inputs.channel_id }}", "blocks": [{ "type": "section", "text": { "type": "mrkdwn", "text": "*status:* success " } }, { "type": "section", "text": { "type": "mrkdwn", "text": "*repository:* ${{ github.repository }}" } } ] }'
+             --data '{ "channel": "${{ inputs.channel_id }}", "blocks": [{ "type": "section", "text": { "type": "mrkdwn", "text": "*status:* success " } }, { "type": "section", "text": { "type": "mrkdwn", "text": "*repository:* ${{ github.repository }}" } }, { "type": "divider" }, { "type": "section", "text": { "type": "mrkdwn", "text": "Check it by clicking the button" }, "accessory": { "type": "button", "text": { "type": "plain_text", "text": "PR Url", "emoji": true }, "value": "click_me_123", "url": "https://github.com/dreamstechnology/demo-test-githubaction-repo", "action_id": "button-action" } } ] }'
 
