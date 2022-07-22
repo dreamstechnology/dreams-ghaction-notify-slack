@@ -22,7 +22,7 @@ runs:
              -H "Authorization: Bearer xoxb-${{ inputs.token }}" \
              -H "Accept: application/json" \
              -H "Content-Type: application/json" \
-             --data '{ "channel": "${{ inputs.channel_id }}", "blocks": [ { "type": "section", "text": { "type": "mrkdwn", "text": "*CI* succeeded for project: *project-name*" } }, { "type": "divider" }, { "type": "section", "text": { "type": "mrkdwn", "text": ":white_check_mark: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|feature/compose-slack-msg>" } }, { "type": "context", "elements": [ { "type": "mrkdwn", "text": "*SHA:* `${{ github.sha }}`" } ] } ] }'
+             --data '{ "channel": "${{ inputs.channel_id }}", "blocks": [ { "type": "section", "text": { "type": "mrkdwn", "text": "*CI* succeeded for project: <${{ github.repositoryUrl }}|${{ github.repository }}" } }, { "type": "divider" }, { "type": "section", "text": { "type": "mrkdwn", "text": ":white_check_mark: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{ github.ref_name }}>" } }, { "type": "context", "elements": [ { "type": "mrkdwn", "text": "*SHA:* `${{ github.sha }}`" } ] } ] }'
     - name: Send success slack notification
       if: ${{ inputs.outcome == 'failure' }}
       shell: bash
@@ -31,6 +31,6 @@ runs:
             -H "Authorization: Bearer xoxb-${{ inputs.token }}" \
             -H "Accept: application/json" \
             -H "Content-Type: application/json" \
-            --data '{ "channel": "${{ inputs.channel_id }}", "blocks": [ { "type": "section", "text": { "type": "mrkdwn", "text": "*CI* failed for project: *project-name*" } }, { "type": "divider" }, { "type": "section", "text": { "type": "mrkdwn", "text": ":x: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|feature/compose-slack-msg>" } }, { "type": "context", "elements": [ { "type": "mrkdwn", "text": "*SHA:* `${{ github.sha }}`" } ] } ] }'
+            --data '{ "channel": "${{ inputs.channel_id }}", "blocks": [ { "type": "section", "text": { "type": "mrkdwn", "text": "*CI* failed for project: <${{ github.repositoryUrl }}|${{ github.repository }}" } }, { "type": "divider" }, { "type": "section", "text": { "type": "mrkdwn", "text": ":x: <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{ github.ref_name }}>" } }, { "type": "context", "elements": [ { "type": "mrkdwn", "text": "*SHA:* `${{ github.sha }}`" } ] } ] }'
 
 
