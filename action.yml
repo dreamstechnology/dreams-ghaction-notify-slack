@@ -18,9 +18,11 @@ runs:
       if: ${{ inputs.outcome == 'success' }}
       shell: bash
       run: |
+        echo "github event push: "
+        echo ${{ github.event.push }}
         curl -X POST https://slack.com/api/chat.postMessage \
              -H "Authorization: Bearer xoxb-${{ inputs.token }}" \
              -H "Accept: application/json" \
              -H "Content-Type: application/json" \
-             --data '{ "channel": "${{ inputs.channel_id }}", "blocks": [ { "type": "divider" }, { "type": "section", "text": { "type": "mrkdwn", "text": ":x: <https://github.com/${{github.repository}}/runs/${{github.run_id}}|${{ github.ref }}>" } }, { "type": "divider" }, { "type": "context", "elements": [ { "type": "mrkdwn", "text": "*${{ github.workflow }}* failed for project: *${{ github.repository }}*" } ] } ]}'
+             --data '{ "channel": "${{ inputs.channel_id }}", "blocks": [ { "type": "divider" }, { "type": "section", "text": { "type": "mrkdwn", "text": ":white_check_mark: <https://github.com/${{github.repository}}/runs/${{github.run_id}}|${{ github.ref }}>" } }, { "type": "divider" }, { "type": "context", "elements": [ { "type": "mrkdwn", "text": "*${{ github.workflow }}* succeeded for project: *${{ github.repository }}*" } ] } ]}'
 
