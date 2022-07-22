@@ -18,6 +18,24 @@ runs:
       if: ${{ inputs.outcome == 'success' }}
       shell: bash
       run: |
+        echo "github repo_url:"
+        echo ${{ github.repositoryUrl }}
+        echo "github workflow: "
+        echo ${{ github.workflow }}
+        echo "github head_ref: "
+        echo ${{ github.head_ref }}
+        echo "github ref: "
+        echo ${{ github.ref }}
+        echo ${{ github.ref_name }}
+        echo "github base_ref: "
+        echo ${{ github.base_ref }}
+        echo "github actor: "
+        echo ${{ github.actor }}
+        echo "github action: "
+        echo ${{ github.action }}
+        echo "runner name:"
+        echo ${{ runner.name }}
+
         curl -X POST https://slack.com/api/chat.postMessage \
              -H "Authorization: Bearer xoxb-${{ inputs.token }}" \
              -H "Accept: application/json" \
