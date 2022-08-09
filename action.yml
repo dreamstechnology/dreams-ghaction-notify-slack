@@ -22,7 +22,7 @@ runs:
              -H "Authorization: Bearer xoxb-${{ inputs.token }}" \
              -H "Accept: application/json" \
              -H "Content-Type: application/json" \
-             --data '{ "channel": "${{ inputs.channel_id }}", "blocks": [ { "type": "divider" }, { "type": "header", "text": { "type": "plain_text", "text": "*${{ github.workflow }}* success" } }, { "type": "section", "text": { "type": "mrkdwn", "text": ":white_check_mark: *<https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|feature/compose-slack-msg>*" } }, { "type": "context", "elements": [ { "type": "mrkdwn", "text": "*SHA:* `${{ github.sha }}`" }, { "type": "mrkdwn", "text": "*Repo:* <https://github.com/${{github.repository}}|${{ github.repository }}>" } ] }, { "type": "divider" } ] }'
+             --data '{ "channel": "${{ inputs.channel_id }}", "blocks": [ { "type": "divider" }, { "type": "header", "text": { "type": "plain_text", "text": "*${{ github.workflow }}* success" } }, { "type": "section", "text": { "type": "mrkdwn", "text": ":white_check_mark: *<https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.ref_name}}>*" } }, { "type": "context", "elements": [ { "type": "mrkdwn", "text": "*SHA:* `${{ github.sha }}`" }, { "type": "mrkdwn", "text": "*Repo:* <https://github.com/${{github.repository}}|${{ github.repository }}>" } ] }, { "type": "divider" } ] }'
     - name: Send success slack notification
       if: ${{ inputs.outcome == 'failure' }}
       shell: bash
@@ -31,6 +31,4 @@ runs:
             -H "Authorization: Bearer xoxb-${{ inputs.token }}" \
             -H "Accept: application/json" \
             -H "Content-Type: application/json" \
-            --data '{ "channel": "${{ inputs.channel_id }}", "blocks": [ { "type": "divider" }, { "type": "header", "text": { "type": "plain_text", "text": "*${{ github.workflow }}* failed" } }, { "type": "section", "text": { "type": "mrkdwn", "text": ":x: *<https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|feature/compose-slack-msg>*" } }, { "type": "context", "elements": [ { "type": "mrkdwn", "text": "*SHA:* `${{ github.sha }}`" }, { "type": "mrkdwn", "text": "*Repo:* <https://github.com/${{github.repository}}|${{ github.repository }}>" } ] }, { "type": "divider" } ] }'
-
-
+            --data '{ "channel": "${{ inputs.channel_id }}", "blocks": [ { "type": "divider" }, { "type": "header", "text": { "type": "plain_text", "text": "*${{ github.workflow }}* failed" } }, { "type": "section", "text": { "type": "mrkdwn", "text": ":x: *<https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}|${{github.ref_name}}>*" } }, { "type": "context", "elements": [ { "type": "mrkdwn", "text": "*SHA:* `${{ github.sha }}`" }, { "type": "mrkdwn", "text": "*Repo:* <https://github.com/${{github.repository}}|${{ github.repository }}>" } ] }, { "type": "divider" } ] }'
